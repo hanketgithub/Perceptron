@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-  const int epochs = 150000;
+  const int epochs = 10000;
   const float learning_rate = 0.1f;
 
   vector<vector<float>> X = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
@@ -23,7 +23,7 @@ int main() {
 
   // --- Inference after training ---
   cout << "\nTrained AND gate:\n";
-  for (int i = 0; i < X.size(); ++i) {
+  for (size_t i = 0; i < X.size(); ++i) {
     float h1_output = hidden1.forward(X[i]);
     float h2_output = hidden2.forward(X[i]);
     float prediction = output_neuron.forward({h1_output, h2_output});
@@ -41,7 +41,7 @@ int main() {
 
   // --- Inference after training ---
   cout << "\nTrained OR gate:\n";
-  for (int i = 0; i < X.size(); ++i) {
+  for (size_t i = 0; i < X.size(); ++i) {
     float h1_output = hidden1.forward(X[i]);
     float h2_output = hidden2.forward(X[i]);
     float prediction = output_neuron.forward({h1_output, h2_output});
