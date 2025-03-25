@@ -36,11 +36,15 @@ float Neuron::forward(const vector<float> &input) {
 }
 
 float Neuron::getBias() { return this->bias; }
+
 void Neuron::setBias(float v) { this->bias = v; }
 
 float Neuron::getInputSum() { return this->input_sum; }
 
 vector<float> &Neuron::getWeights() { return this->weights; }
+
+float Neuron::getWeight(int idx) { return this->weights[idx]; }
+
 void Neuron::setWeight(int idx, float v) { this->weights[idx] = v; }
 
 void Neuron::reset() {
@@ -75,7 +79,8 @@ void train(vector<vector<float>> &X, vector<float> &Y, Neuron &hidden1, Neuron &
 
       // Update weights for output neuron
       for (size_t j = 0; j < output_neuron.getWeights().size(); j++) {
-        float new_weight = output_neuron.getWeights()[j] - learning_rate * d_output * hidden_outputs[j];
+        float new_weight = output_neuron.getWeight(j) - learning_rate * d_output * hidden_outputs[j];
+
         output_neuron.setWeight(j, new_weight);
       }
 
@@ -83,14 +88,14 @@ void train(vector<vector<float>> &X, vector<float> &Y, Neuron &hidden1, Neuron &
       output_neuron.setBias( output_neuron.getBias() - learning_rate * d_output );
 
       // --- Backward pass: hidden layer ---
-      float d_hidden1 = d_output * output_neuron.getWeights()[0] * sigmoid_derivative(hidden1.getInputSum());
-      float d_hidden2 = d_output * output_neuron.getWeights()[1] * sigmoid_derivative(hidden2.getInputSum());
+      float d_hidden1 = d_output * output_neuron.getWeight(0) * sigmoid_derivative(hidden1.getInputSum());
+      float d_hidden2 = d_output * output_neuron.getWeight(1) * sigmoid_derivative(hidden2.getInputSum());
 
       for (size_t j = 0; j < hidden1.getWeights().size(); j++) {
-        float new_weight1 = hidden1.getWeights()[j] - learning_rate * d_hidden1 * input[j];
+        float new_weight1 = hidden1.getWeight(j) - learning_rate * d_hidden1 * input[j];
         hidden1.setWeight(j, new_weight1);
 
-        float new_weight2 = hidden2.getWeights()[j] - learning_rate * d_hidden2 * input[j];
+        float new_weight2 = hidden2.getWeight(j) - learning_rate * d_hidden2 * input[j];
         hidden2.setWeight(j, new_weight2);
       }
 

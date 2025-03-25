@@ -18,7 +18,8 @@ public:
   float getInputSum();
 
   std::vector<float> &getWeights();
-  void setWeight(int idx, float v);
+  float               getWeight(int idx);
+  void                setWeight(int idx, float v);
 
   void reset();
 };
