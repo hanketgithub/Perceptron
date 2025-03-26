@@ -13,7 +13,7 @@ int main() {
 
   vector<vector<float>> X = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
   // expected AND output
-  vector<float> Y = {0, 0, 0, 1};
+  vector<float> Y = {0, 1, 1, 0};
 
   Neuron hidden1(2);
   Neuron hidden2(2);
@@ -22,30 +22,12 @@ int main() {
   train(X, Y, hidden1, hidden2, output_neuron, epochs, learning_rate);
 
   // --- Inference after training ---
-  cout << "\nTrained AND gate:\n";
+  cout << "\nTrained XOR gate:\n";
   for (size_t i = 0; i < X.size(); ++i) {
     float h1_output = hidden1.forward(X[i]);
     float h2_output = hidden2.forward(X[i]);
     float prediction = output_neuron.forward({h1_output, h2_output});
-    cout << X[i][0] << " AND " << X[i][1]
-         << " = " << round(prediction)
-         << " (raw: " << prediction << ")\n";
-  }
-
-  printf("\n\n\n");
-
-  // expected OR output
-  Y = {0, 1, 1, 1};
-
-  train(X, Y, hidden1, hidden2, output_neuron, epochs, learning_rate);
-
-  // --- Inference after training ---
-  cout << "\nTrained OR gate:\n";
-  for (size_t i = 0; i < X.size(); ++i) {
-    float h1_output = hidden1.forward(X[i]);
-    float h2_output = hidden2.forward(X[i]);
-    float prediction = output_neuron.forward({h1_output, h2_output});
-    cout << X[i][0] << " OR " << X[i][1]
+    cout << X[i][0] << " XOR " << X[i][1]
          << " = " << round(prediction)
          << " (raw: " << prediction << ")\n";
   }
